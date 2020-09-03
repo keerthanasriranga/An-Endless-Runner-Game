@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PlayerManager.isGameStarted)
+            return;
         direction.z = forwardSpeed;
         direction.y += Gravity * Time.deltaTime;
         if (controller.isGrounded)
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour
         //Calculate where we should be in the future
         Vector3 targetPosition = transform.position.z*transform.forward +
                                  transform.position.y*transform.up;
+ 
         if(desiredLane==0)
         {
             targetPosition += Vector3.left*laneDistance;
@@ -70,7 +73,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-    	controller.Move(direction*Time.fixedDeltaTime);
+        if (!PlayerManager.isGameStarted)
+            return;
+        controller.Move(direction*Time.fixedDeltaTime);
     }
 
     private void Jump()
