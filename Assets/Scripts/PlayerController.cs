@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float laneDistance = 4; //distance between two lanes
     public float jumpForce;
     public float Gravity = -20;
+    public float maxSpeed;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -22,6 +23,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!PlayerManager.isGameStarted)
             return;
+        //increase speed
+        if(forwardSpeed<maxSpeed)
+            forwardSpeed += 0.1f * Time.deltaTime;
+
         direction.z = forwardSpeed;
         direction.y += Gravity * Time.deltaTime;
         if (controller.isGrounded)
